@@ -57,6 +57,8 @@ case node['platform_family']
     end
 end
 
+node.run_state['mongodb3'] ||= {}
+
 # Create or modify the mms agent config file
 template '/etc/mongodb-mms/monitoring-agent.config' do
   source 'monitoring-agent.config.erb'

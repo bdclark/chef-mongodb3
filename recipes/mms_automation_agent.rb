@@ -60,6 +60,8 @@ case node['platform_family']
     end
 end
 
+node.run_state['mongodb3'] ||= {}
+
 # Create or modify the mms agent config file
 template '/etc/mongodb-mms/automation-agent.config' do
   source 'automation-agent.config.erb'

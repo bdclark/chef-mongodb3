@@ -3,7 +3,7 @@
 #
 # Enter your API key  - See: cloud.mongodb.com/settings/group
 #
-mmsApiKey=<%= @config['mmsApiKey'] %>
+mmsApiKey=<%= @config['mmsApiKey'] || node.run_state['mongodb3']['mmsApiKey'] %>
 
 #
 # Hostname of the MMS monitoring web server.
