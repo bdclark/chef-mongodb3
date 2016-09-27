@@ -52,20 +52,24 @@ directory File.dirname(node['mongodb3']['config']['mongod']['systemLog']['path']
   recursive true
 end
 
-unless node['mongodb3']['config']['key_file_content'].to_s.empty?
-  # Create the key file if it is not exist
-  key_file = node['mongodb3']['config']['mongod']['security']['keyFile']
+node.run_state['mongodb3'] ||= {}
 
-  # Create the directory for key file
-  directory File.dirname(key_file).to_s do
+key_file = node['mongodb3']['config']['mongod']['security']['keyFile']
+key_file_content = node['mongodb3']['config']['key_file_content'] ||
+                   node.run_state['mongodb3']['key_file_content']
+
+if key_file && key_file_content
+  directory ::File.dirname(key_file).to_s do
     action :create
-    owner node['mongodb3']['user']
-    group node['mongodb3']['group']
+    unless ::File.dirname(key_file) == '/etc'
+      owner node['mongodb3']['user']
+      group node['mongodb3']['group']
+    end
     recursive true
   end
 
   file key_file do
-    content node['mongodb3']['config']['key_file_content']
+    content key_file_content
     mode '0600'
     owner node['mongodb3']['user']
     group node['mongodb3']['group']
