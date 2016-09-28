@@ -68,6 +68,9 @@ default['mongodb3']['mongod']['config_file'] = '/etc/mongod.conf'
 # Disable Transparent Huge Pages (THP)
 default['mongodb3']['mongod']['disable-transparent-hugepages'] = false
 
+# Restart mongod on config changes
+default['mongodb3']['mongod']['restart_on_update'] = true
+
 # Mongos config file
 default['mongodb3']['mongos']['config_file'] = '/etc/mongos.conf'
 
