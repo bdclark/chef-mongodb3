@@ -146,6 +146,8 @@ service 'mongod' do
   end
   supports :start => true, :stop => true, :restart => true, :status => true
   action :enable
-  subscribes :restart, "template[#{node['mongodb3']['mongod']['config_file']}]", :delayed
-  subscribes :restart, "template[#{node['mongodb3']['config']['mongod']['security']['keyFile']}", :delayed
+  if node['mongodb3']['mongod']['restart_on_update']
+    subscribes :restart, "template[#{node['mongodb3']['mongod']['config_file']}]", :delayed
+    subscribes :restart, "template[#{node['mongodb3']['config']['mongod']['security']['keyFile']}", :delayed
+  end
 end
